@@ -32,8 +32,14 @@ if (nargin<=2) fs=44100; end %sampling freq in Hz
 			x0_4 = .1*sin(16*pi*f0*(t0(N3+1:N4)-t0(N3)));
 			x0_5 = sin(1.1*pi*f0*(t0(N4+1:N)-t0(N4)));
 			x0 = [x0_1 x0_2 x0_3 x0_4 x0_5];
+		case 'vibrant'
+			N = length(t0);
+			N1 = floor(.2*N);
+			x0_1 = zeros(1,N1);
+			x0_2 = sin(2*pi*20*t0(1:.8*N-1))+t0(1:.8*N-1);
+			x0 = [x0_1 x0_2];
 		otherwise
-			N=length(t0);
+			N=length(100*t0);
 			N1=floor(.6*N);
 			N2=floor(.8*N);
     
