@@ -110,7 +110,7 @@ phonemesamples_end=numel(sound);
 	
 %%%%%	FENSTERUNG	%%%%%
 	
-	wind=tukeywin(numel(sound),alpha);								%Window (Samples)
+	wind=tukeywin(numel(sound),alpha*(numel(sound)-1));								%Window (Samples)
 	sound_out = sound.*wind';										%Fenstern des Lautes
 	if(max(sound_out) != 0) if(window == 1) sound_out = sound_out/max(sound_out); end end	%Normierung
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
