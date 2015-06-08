@@ -43,16 +43,17 @@ for i=1:numel(buchstaben)
 			%f2=5500;	%B2=500
 			%B1=300;
 			%B2=500;
-			b1=fir1(50,[1750 3200]/(fs/2),'DC-0');
+			b1=fir1(50,[2000 4750]/(fs/2),'DC-0');
 			w1=1;
-			b2=fir1(70,[4950 6400]/(fs/2),'DC-0');
+			b2=fir1(100,[4950 6400]/(fs/2),'DC-0');
 			w2=.5;
 		case 'ch'
 			%f1=320;
 			%f2=3200;
-			b1=fir1(100,[2350 3200]/(fs/2),'DC-0');
+			%b1=fir1(100,[2350 3200]/(fs/2),'DC-0');
+			b1=fir1(200,[2700 4750]/(fs/2),'DC-0');
 			w1=1;
-			b2=fir1(100,[4950 6400]/(fs/2),'DC-0');
+			b2=fir1(100,[4500 6400]/(fs/2),'DC-0');
 			w2=.8;
 		case 'f'		%Orientierung an Narayanan et al. 'Noise Source Models for Fricative Consonants'
 			%f1=1000;
