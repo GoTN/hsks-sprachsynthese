@@ -74,7 +74,7 @@ lauttyp = 'none';
 	
 %%%%%	SOUND ERZEUGEN	%%%%%
 charnum_temp=0; %temporäre Charnum
-window = 1;		%soll noch gefenster werden?	
+norm = 1;		%soll noch gefenster werden?	
 	switch lauttyp					
 		case 'diphthong'
 			sound=diphthong({word(charnum:charnum+1)},2*phonemelength,fs);			%Buchstabe, Zeitdauer (Samples*Samplingtime), Samplingfreq
@@ -88,6 +88,7 @@ window = 1;		%soll noch gefenster werden?
 		case 'zisch'
 			sound=zischlaut({word(charnum:charnum+max_size)},phonemelength,fs);		%Buchstabe, Zeitdauer (Samples*Samplingtime), Samplingfreq
 			charnum_temp = charnum +max_size+1;										%Zisch hat x Buchstaben
+			norm=0;		
 		case 'plosiv'
 			sound=plosiv(word(charnum:charnum+1),phonemelength*1.5,fs);
 			sound=[zeros(1,floor(0.083*fs)) sound];
@@ -95,8 +96,7 @@ window = 1;		%soll noch gefenster werden?
 		case 'plosiv_st'
 			sound=plosiv_stimmlos(word(charnum),phonemelength,fs);
 			charnum_temp = charnum + 1;
-			sound=[zeros(1,floor(0.1*fs)) sound];
-			window = 0;		
+			sound=[zeros(1,floor(0.1*fs)) sound];		
 		case 'pause'
 			sound=zeros(1,phonemesamples*1.2);
 			charnum_temp = charnum +1;												%pause hat 1
@@ -112,7 +112,7 @@ phonemesamples_end=numel(sound);
 	
 	wind=tukeywin(numel(sound),alpha);								%Window (Samples)
 	sound_out = sound.*wind';										%Fenstern des Lautes
-	if(max(sound_out) != 0) if(window == 1) sound_out = sound_out/max(sound_out); end end	%Normierung
+	if(max(sound_out) != 0) if(norm == 1) sound_out = sound_out/max(sound_out); end end	%Normierung
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
