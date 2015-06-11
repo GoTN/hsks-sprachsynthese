@@ -96,7 +96,8 @@ norm = 1;		%soll noch gefenster werden?
 		case 'plosiv_st'
 			sound=plosiv_stimmlos(word(charnum),phonemelength,fs);
 			charnum_temp = charnum + 1;
-			sound=[zeros(1,floor(0.1*fs)) sound];		
+			sound=[zeros(1,floor(0.1*fs)) sound];
+			norm=0;		
 		case 'pause'
 			sound=zeros(1,phonemesamples*1.2);
 			charnum_temp = charnum +1;												%pause hat 1
