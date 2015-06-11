@@ -23,7 +23,8 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	% Normierung, zeitliche Begrenzung der Aufnahme
 	%signal = signal./max(abs(signal));
 	signal = signal((end-nf)/2:(end+nf-1)/2);
-
+	df=Fs/nf;
+	f=[0:df:(nf-1)*df];
 	% Fensterung der Aufnahme mit einem Hanning-Fenster
 	h_window = hanning(nf);
 	signal = signal.*h_window;
@@ -33,11 +34,11 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	log_spectrum = log10(abs(spectrum));
 	cepstrum = ifft(log_spectrum);
 	%x_axis = (1:size(cepstrum));
-
+	
 	% Fensterung des cepstrums, da das Cepstrum symmetrisch ist
-	cepstrum = cepstrum(1:size(cepstrum)/2);
-  figure;
-  plot(abs(cepstrum));
+	%cepstrum = cepstrum(1:size(cepstrum)/2);
+	figure;
+	plot(abs(cepstrum));
 	%plot(cepstrum);
 	% Liftering (Filterung des Vokaltraktsignals mit Formanten)
 	%lift = zeros(length(cepstrum),1);
@@ -45,12 +46,10 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	%lift_cepstr = real(cepstrum.*lift);	
 	%ceps_coeff = lift_cepstr(1:50);		%unnoetig, geht alles in einer zeile
 	ceps_coeff=abs(cepstrum(1:128));
-	mag_spec = fft(ceps_coeff, 128);
-	mag_spec = mag_spec(1:64);
-  df=Fs/128;
-  f=[0:df:64*df-1];
-	%figure;
-	%plot(f,abs(mag_spec));
+	mag_spec = fft(ceps_coeff);
+	f=0:df:(length(mag_spec)-1)*df;
+	figure;
+	plot(f,abs(mag_spec));
 	title(strcat('Cepstrum',' ',char(lautliste(datei))));
 	%input('weiter')
 
