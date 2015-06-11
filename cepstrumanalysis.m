@@ -42,16 +42,18 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	%lift(1:50) = 1;
 	%lift_cepstr = real(cepstrum.*lift);	
 	%ceps_coeff = lift_cepstr(1:50);		%unnoetig, geht alles in einer zeile
-	ceps_coeff=real(cepstrum(1:50));
-	mag_spec = fft(ceps_coeff, 41500);
-	mag_spec = mag_spec(1:20250);
+	ceps_coeff=abs(cepstrum(1:128));
+	mag_spec = fft(ceps_coeff, 128);
+	mag_spec = mag_spec(1:64);
+  df=Fs/64;
+  f=[0:df:64*df-1];
 	figure;
-	plot(real(mag_spec));
+	plot(f,abs(mag_spec));
 	title(strcat('Cepstrum',' ',char(lautliste(datei))));
 	%input('weiter')
 
 	% Maximabestimmung
-	[pks,loc] = findpeaks(real(mag_spec), 'DoubleSided');
+	[pks,loc] = findpeaks(abs(mag_spec), 'DoubleSided');
 end
 % TODO: Maximumsbestimmung, Automatische Bearbeitung aller WAV-Files im Ordner
 % Wie genau wird die Bandbreite der Formanten abgelesen?
