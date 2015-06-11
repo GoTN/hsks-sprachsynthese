@@ -36,6 +36,8 @@ for datei = 1:numel(lautliste)   % loop over wave files
 
 	% Fensterung des cepstrums, da das Cepstrum symmetrisch ist
 	cepstrum = cepstrum(1:size(cepstrum)/2);
+  figure;
+  plot(abs(cepstrum));
 	%plot(cepstrum);
 	% Liftering (Filterung des Vokaltraktsignals mit Formanten)
 	%lift = zeros(length(cepstrum),1);
@@ -45,10 +47,10 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	ceps_coeff=abs(cepstrum(1:128));
 	mag_spec = fft(ceps_coeff, 128);
 	mag_spec = mag_spec(1:64);
-  df=Fs/64;
+  df=Fs/128;
   f=[0:df:64*df-1];
-	figure;
-	plot(f,abs(mag_spec));
+	%figure;
+	%plot(f,abs(mag_spec));
 	title(strcat('Cepstrum',' ',char(lautliste(datei))));
 	%input('weiter')
 
