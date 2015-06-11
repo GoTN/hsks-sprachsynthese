@@ -47,7 +47,8 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	%ceps_coeff = lift_cepstr(1:50);		%unnoetig, geht alles in einer zeile
 	ceps_coeff=abs(cepstrum(1:128));
 	mag_spec = fft(ceps_coeff);
-	f=0:df:(length(mag_spec)-1)*df;
+	df=Fs/length(mag_spec);
+	f=[0:df:(length(mag_spec)-1)*df];
 	figure;
 	plot(f,abs(mag_spec));
 	title(strcat('Cepstrum',' ',char(lautliste(datei))));
