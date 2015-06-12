@@ -36,7 +36,7 @@ if (nargin<=2) fs=44100; end %sampling freq in Hz
 			N = length(t0);
 			N1 = floor(.2*N);
 			x0_1 = zeros(1,N1);
-			x0_2 = sin(2*pi*20*t0(1:.8*N-1))+t0(1:.8*N-1);
+			x0_2 = sin(2*pi*15*t0(1:.8*N-1))+t0(1:.8*N-1);
 			x0 = [x0_1 x0_2];
 		case 'linquidl'
 			N=length(t0);
