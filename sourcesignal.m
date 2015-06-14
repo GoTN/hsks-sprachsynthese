@@ -18,6 +18,7 @@ if (nargin<=2) fs=44100; end %sampling freq in Hz
 	switch char(lauttyp)
 		case 'zisch'
 			x0=randn(size(t));
+		%{
 		case 'nasal'
 			%x0=5.51*cos(2*pi*f0*t0+.119)+3.637*cos(4*pi*f0*t0-.366)+.796*cos(6*pi*f0*t0+.67);
 			%x0=x0/max(x0);
@@ -32,12 +33,14 @@ if (nargin<=2) fs=44100; end %sampling freq in Hz
 			x0_4 = .1*sin(16*pi*f0*(t0(N3+1:N4)-t0(N3)));
 			x0_5 = sin(1.1*pi*f0*(t0(N4+1:N)-t0(N4)));
 			x0 = [x0_1 x0_2 x0_3 x0_4 x0_5];
+		%}
 		case 'vibrant'
 			N = length(t0);
 			N1 = floor(.2*N);
 			x0_1 = zeros(1,N1);
 			x0_2 = sin(2*pi*15*t0(1:.8*N-1))+t0(1:.8*N-1);
 			x0 = [x0_1 x0_2];
+		%{
 		case 'linquidl'
 			N=length(t0);
 			N1=floor(.5*N);
@@ -48,6 +51,7 @@ if (nargin<=2) fs=44100; end %sampling freq in Hz
 			x0_3=-.05*sin(14*pi*f0*(t0(N2:N3)-t0(N2)));
 			x0_4=sin(3.5*pi*f0*(t0(N3+1:N)-t0(N3)));
 			x0=[x0_1 x0_2 x0_3 x0_4];
+		%}
 		case 'fricationw'
 			x0=randn(1,length(t0)); 
 		otherwise

@@ -26,15 +26,19 @@ for i=1:numel(buchstaben)
 	
 	switch char(buchstabe)
 		case 'm'
-			n=3; %Filterordnung
-			fg=800; %Grenzfrequenz
+			fg=200; %Grenzfrequenz
 		case 'n'
-			n=1; %Filterordnung
-			fg=700;
+			fg=300;
 	end
 	
-	[b a] = butter(n,fg/(.5*fs),'low');	%Manipulation des Signals im Frequenzbereich mit Tiefpassfilter
+	[b a] = butter(3,200/(0.5*fs),'high');	%Manipulation des Signals im Frequenzbereich mit Tiefpassfilter(f0 = 800HZ)
 	y = filter(b,a,x);
+	
+	[b a] = butter(3,fg/(.5*fs),'low');	%Manipulation des Signals im Frequenzbereich mit Tiefpassfilter
+	y = filter(b,a,x);
+	
+	wind=tukeywin(length(y),.15);
+	y = y.*wind';
 
 	wavwrite(y'/max(y),fs,strcat('nasal-',char(buchstabe),'.wav'));
 end

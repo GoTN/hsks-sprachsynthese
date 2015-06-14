@@ -21,7 +21,7 @@ x=sourcesignal('linquidl',DUR,fs);
 disp(buchstaben);
 
 %%%%%%%%%%%%%%%%%%%%%		Filter 	 	%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%{
 y = formantfilter(x,Ts,450,200);
 
 [b a] = butter(3,[700/(0.5*fs),900/(0.5*fs)],'stop');
@@ -34,6 +34,9 @@ y = formantfilter(y,Ts,1700,500);
 
 [b a] = butter(5,3000/(0.5*fs),'low');	%Manipulation des Signals im Frequenzbereich mit Tiefpassfilter(f0 = 700HZ)
 y = filter(b,a,y);
+%}
+y = formantfilter(x,Ts,310,50);
+y = formantfilter(y,Ts,1050,100);
 
 wind=tukeywin(length(y),.01);
 y = y.*wind';
