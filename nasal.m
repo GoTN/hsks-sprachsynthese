@@ -37,8 +37,35 @@ for i=1:numel(buchstaben)
 	[b a] = butter(3,fg/(.5*fs),'low');	%Manipulation des Signals im Frequenzbereich mit Tiefpassfilter
 	y = filter(b,a,x);
 	
-	wind=tukeywin(length(y),.15);
-	y = y.*wind';
+%{
+for i=1:numel(buchstaben)
+	buchstabe=buchstaben(i);
+	
+	switch char(buchstabe)
+		case 'm'
+			f1 = 480;
+			f2 = 1270;
+			f3 = 2130;
+			B1 = 40;
+			B2 = 200;
+			B3 = 200;
+		case 'n'
+			f1 = 480;
+			f2 = 1340;
+			f3 = 2470;
+			B1 = 40;
+			B2 = 300;
+			B3 = 300;
+	end
+	
+	[b a] = butter(2,[440/(0.5*fs),460/(0.5*fs)],'stop');
+	y = filter(b,a,x);		%Anti-Formantfilter "RNZ-FNZ"
+	
+	y = formantfilter(y,Ts,270,20);		%Zusaetzlicher Formantfilter "RNP-FNP"
+	y=formantfilter(y,Ts,f1,B1);	%1. Formantfilter
+	y=formantfilter(y,Ts,f2,B2);	%2. Formantfilter
+	y=formantfilter(y,Ts,f3,B3);	%3. Formantfilter
+%}
 
 	wavwrite(y'/max(y),fs,strcat('nasal-',char(buchstabe),'.wav'));
 end
