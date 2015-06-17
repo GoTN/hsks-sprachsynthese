@@ -81,7 +81,11 @@ norm = 1;		%soll noch gefenster werden?
 			charnum_temp = charnum +2;												%diphtong hat 2 Buchstaben		
 		case 'vokal'
 			sound=stimmhaft({word(charnum:charnum+max_size)},phonemelength,fs);							%Buchstabe, Zeitdauer (Samples*Samplingtime), Samplingfreq
+			if(max_size==0)
 			charnum_temp = charnum +1;												%vokal hat 1 Buchstaben		
+			else
+			charnum_temp = charnum +2;
+			end
 		case 'vibrant'
 			sound=vibrant({word(charnum:charnum+max_size)},phonemelength,fs);							%Buchstabe, Zeitdauer (Samples*Samplingtime), Samplingfreq
 			charnum_temp = charnum +1;												%vibrant hat 1 Buchstaben			
