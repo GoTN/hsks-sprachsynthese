@@ -8,7 +8,7 @@
 %%%%%							 PARAMETER 								%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 phonemelength = .23;	%Laenge in sec
-alpha = 0.9;			%%alpha for tukey window
+alpha = 1;			%%alpha for tukey window
 ver =	int32((alpha*(phonemelength-1)/2));		%verbindungsfaktor 
 fs=44100;
 phonemesamples=floor(phonemelength*fs);
@@ -141,5 +141,7 @@ phonemesamples_end=numel(sound);
 	end
 	charnum = charnum_temp;
 end
-
+%disp(ende);
+%disp(numel(final_out));
+final_out(ende+1:numel(final_out))=[];%Offset wegschneiden
 wavwrite(final_out'/max(final_out),fs,outputname);
