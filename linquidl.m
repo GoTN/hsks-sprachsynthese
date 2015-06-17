@@ -37,6 +37,7 @@ y = filter(b,a,y);
 %}
 y = formantfilter(x,Ts,310,50);
 y = formantfilter(y,Ts,1050,100);
+y = formantfilter(y,Ts,2880,280);
 
 wind=tukeywin(length(y),.01);
 y = y.*wind';
