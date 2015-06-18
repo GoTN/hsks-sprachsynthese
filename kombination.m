@@ -106,9 +106,8 @@ norm = 1;		%soll noch gefenster werden?
 			sound=zeros(1,phonemesamples*1.2);
 			charnum_temp = charnum +1;												%pause hat 1
 		case 'nasal'
-			sound=nasal(word(charnum),phonemelength*1.2,fs);
+			sound=nasal(word(charnum),phonemelength,fs);
 			charnum_temp = charnum +1;
-			norm=0;
 		case 'linquidl'
 			sound=linquidl(word(charnum),phonemelength,fs);
 			charnum_temp = charnum +1;
