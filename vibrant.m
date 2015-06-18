@@ -27,19 +27,18 @@ for i=1:numel(buchstaben)
 	
 	switch char(buchstabe)
 		case 'r'
-			f1=460;
+			f1=300;
 			f2=1113;
 			f3=2408;	
-			B1=100;
+			B1=300;
 			B2=190;
 			B3=550;
 	end
 	if(syn == 1)
 		y=formantfilter(x,Ts,f1,B1);	%1. Formantfilter
-		y=formantfilter(y,Ts,f2,B2);	%2. Formantfilter
-		y=formantfilter(y,Ts,f3,B3);	%3. Formantfilter
+		%y=formantfilter(y,Ts,f2,B2);	%2. Formantfilter
 		%y=formantfilter(y,Ts,f4,B4);	%4. Formantfilter
-		[b,a] = butter(1, 1000/fs, 'low');
+		[b,a] = butter(5,3000/(0.5*fs),'low');
 		y=filter(b,a,y);
 
 	else 
