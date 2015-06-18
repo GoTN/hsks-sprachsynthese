@@ -64,7 +64,7 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	title(fig_title);
 	xlabel('Frequenz in Hz')
 	ylabel('Amplitudenspektrum')
-	matlab2tikz(strcat(char(lautliste(datei)),'_amplitude.tex'))
+	matlab2tikz(strcat(char(lautliste(datei)),'_amplitude.tex'), 'height', '.5\textwidth');
 	[peak, loc] = findpeaks(mag_spec, "DoubleSided")
 
 	%input('weiter')
