@@ -20,6 +20,6 @@ for i=1:numel(buchstaben)
   figure;
   plot(f,mag);
   xlabel('Frequenz f/Hz');
-  ylabel(strcat('|',toupper(buchstabe),'(f)| in dB'));
-  matlab2tikz(strcat('spektrum-',buchstabe,'-3.tex'),'height','.5\textwidth');
+  ylabel(strcat('|',toupper(buchstaben(i)),'(f)| in dB'));
+  matlab2tikz(strcat('spektrum-',buchstabe(i),'-3.tex'),'height','.5\textwidth');
 end
