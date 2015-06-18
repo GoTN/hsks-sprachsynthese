@@ -108,6 +108,7 @@ norm = 1;		%soll noch gefenster werden?
 		case 'nasal'
 			sound=nasal(word(charnum),phonemelength*1.2,fs);
 			charnum_temp = charnum +1;
+			norm=0;
 		case 'linquidl'
 			sound=linquidl(word(charnum),phonemelength,fs);
 			charnum_temp = charnum +1;
