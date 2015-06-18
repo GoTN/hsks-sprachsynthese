@@ -11,7 +11,7 @@
 
 %signal=wavread('a-marcus.wav');
 %x = dir("*.wav")
-lautliste={'ue'};
+lautliste={'a'};
 
 
 % Anzahl der Punkte für die spaetere FFT
@@ -34,12 +34,23 @@ for datei = 1:numel(lautliste)   % loop over wave files
   %figure;
   %plot(log_spectrum);
 	cepstrum = ifft(log_spectrum);
-	
 	% Fensterung des cepstrums, da das Cepstrum symmetrisch ist
 	cepstrum = cepstrum(1:size(cepstrum)/2);
-  %figure;
-	%plot(real(cepstrum));
+  figure;
+	plot(real(cepstrum));
+	fig_title = 'Cepstrum des Vokals a';
+  title(fig_title);
+  xlabel('Quefrenz in Samples')
+  ylabel('Cepstrum')
+  % Geliftertes Cepstrum
 	ceps_coeff=real(cepstrum(1:256));
+  figure;
+  plot(ceps_coeff);
+	fig_title = 'geliftertes Cepstrum des Vokals a';
+  title(fig_title);
+  xlabel('Quefrenz in Samples')
+  ylabel('geliftertes Cepstrum')
+  % Formantanalyse
 	mag_spec = real(fft(ceps_coeff));
   l=length(mag_spec);
   mag_spec = mag_spec(1:128);
@@ -47,12 +58,10 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	f=[0:df:(l-1)/2*df];
 	figure;
 	plot(f,mag_spec);
-  title('Formanten f\"ur den Vokal a');
-  line([0 25000], [-12.4 -12.4])
-  line([0 25000], [-14.1 -14.1])
-  line([0 25000], [-13.774 -13.774])
-  xlabel('Frequenz')
-  ylabel('Amplitudendichtespektrum')
+  fig_title = 'Formanten f\"ur den Vokal a';
+  title(fig_title);
+  xlabel('Frequenz in Hz')
+  ylabel('Amplitudenspektrum')
   [peak, loc] = findpeaks(mag_spec, "DoubleSided")
 
 	%input('weiter')
