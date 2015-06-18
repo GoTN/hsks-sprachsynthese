@@ -42,7 +42,7 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	title(fig_title);
 	xlabel('Quefrenz in Samples')
 	ylabel('Cepstrum')
-	matlab2tikz(strcat(char(lautliste(datei)),'_cepstrum.tex'))
+	matlab2tikz(strcat(char(lautliste(datei)),'_cepstrum.tex'), 'height', '.5\textwidth')
   % Geliftertes Cepstrum
 	ceps_coeff=real(cepstrum(1:256));
 	figure;
@@ -51,7 +51,7 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	title(fig_title);
 	xlabel('Quefrenz in Samples')
 	ylabel('geliftertes Cepstrum')
-	matlab2tikz(strcat(char(lautliste(datei)),'_liftered_cepstrum.tex'))
+	matlab2tikz(strcat(char(lautliste(datei)),'_liftered_cepstrum.tex'), 'height', '.5\textwidth')
   % Formantanalyse
 	mag_spec = real(fft(ceps_coeff));
 	l=length(mag_spec);
