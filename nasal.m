@@ -3,17 +3,14 @@
 % 					   			 Nasallaute								%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function y=nasal(buchstaben,DUR,fs,B)
+function y=nasal(buchstaben,DUR,fs)
 
 %%%%%			PARAMETER			%%%%%
 if (nargin==0) buchstaben={'m';'n'};end%Buchstaben
 if (nargin<=1) DUR=2; end %duration in sec
 if (nargin<=2) fs=44100; end %sampling freq in Hz
-if (nargin<=3) B=[100 160]; end %bandwidth
 
 Ts=1/fs;
-B1=B(1);	%Filterbandbreite Formant 1	Acoustic Phonetics von Kenneth N. Stevens!
-B2=B(2);	%Filterbandbreite Formant 2
 f0=150;	% Grundschwingung, Tonhoehe
 
 x=sourcesignal('nasal',DUR,fs);
@@ -21,6 +18,7 @@ disp(buchstaben);
 
 %%%%%%%%%%%%%%%%%		Filter(nur mit Tiefpassfilter)	 %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%{
 for i=1:numel(buchstaben)
 	buchstabe=buchstaben(i);
 	
@@ -36,8 +34,8 @@ for i=1:numel(buchstaben)
 	
 	[b a] = butter(3,fg/(.5*fs),'low');	%Manipulation des Signals im Frequenzbereich mit Tiefpassfilter
 	y = filter(b,a,x);
-	
-%{
+%}
+
 for i=1:numel(buchstaben)
 	buchstabe=buchstaben(i);
 	
@@ -65,7 +63,7 @@ for i=1:numel(buchstaben)
 	y=formantfilter(y,Ts,f1,B1);	%1. Formantfilter
 	y=formantfilter(y,Ts,f2,B2);	%2. Formantfilter
 	y=formantfilter(y,Ts,f3,B3);	%3. Formantfilter
-%}
+
 
 	wavwrite(y'/max(y),fs,strcat('nasal-',char(buchstabe),'.wav'));
 end
