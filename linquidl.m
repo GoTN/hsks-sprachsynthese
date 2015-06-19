@@ -35,9 +35,9 @@ y = formantfilter(y,Ts,1700,500);
 [b a] = butter(5,3000/(0.5*fs),'low');	%Manipulation des Signals im Frequenzbereich mit Tiefpassfilter(f0 = 700HZ)
 y = filter(b,a,y);
 %}
-y = formantfilter(x,Ts,310,50);
-y = formantfilter(y,Ts,1050,100);
-y = formantfilter(y,Ts,2880,280);
+y = formantfilter(x,Ts,318,90);
+y = formantfilter(y,Ts,1591,150);
+y = formantfilter(y,Ts,2657,130);
 
 wind=tukeywin(length(y),.01);
 y = y.*wind';
