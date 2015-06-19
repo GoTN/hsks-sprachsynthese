@@ -1,7 +1,7 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	HAUPTSEMINAR SPRACHSYNTHESE%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					HAUPTSEMINAR SPRACHSYNTHESE						%
 %				  Cepstrum-Analyse von WAVFiles						%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %function y=cepstrumanalysis()
 
@@ -12,7 +12,7 @@
 %signal=wavread('a-marcus.wav');
 %x = dir("*.wav")
 lautliste={'a';'e';'i';'o';'u';'ae';'oe';'ue'};
-
+cd aufnahmen/
 
 % Anzahl der Punkte für die spaetere FFT
 nf=2^14; %solange das auch immer ausreicht, sonst dynamisch
@@ -38,20 +38,20 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	cepstrum = cepstrum(1:size(cepstrum)/2);
 	figure;
 	plot(real(cepstrum));
-	fig_title = strcat('Cepstrum f\"ur den Vokal "', char(lautliste(datei)), '"');
+	fig_title = strcat('Cepstrum f\"ur den Vokal \enquote{', char(lautliste(datei)), '}');
 	title(fig_title);
 	xlabel('Quefrenz in Samples')
 	ylabel('Cepstrum')
-	%matlab2tikz(strcat(char(lautliste(datei)),'_cepstrum.tex'), 'height', '.5\textwidth')
+	%matlab2tikz(strcat(char(lautliste(datei)),'-cepstrum.tex'), 'height', '.5\textwidth')
   % Geliftertes Cepstrum
 	ceps_coeff=real(cepstrum(1:256));
 	figure;
 	plot(ceps_coeff);
-	fig_title = strcat('geliftertes Cepstrum f\"ur den Vokal "', char(lautliste(datei)), '"');
+	fig_title = strcat('geliftertes Cepstrum f\"ur den Vokal \enquote{', char(lautliste(datei)), '}');
 	title(fig_title);
 	xlabel('Quefrenz in Samples')
-	ylabel('geliftertes Cepstrum')
-	%matlab2tikz(strcat(char(lautliste(datei)),'_liftered_cepstrum.tex'), 'height', '.5\textwidth')
+	ylabel('Geliftertes Cepstrum')
+	%matlab2tikz(strcat(char(lautliste(datei)),'-liftered-cepstrum.tex'), 'height', '.5\textwidth')
   % Formantanalyse
 	mag_spec = real(fft(ceps_coeff));
 	l=length(mag_spec);
@@ -60,12 +60,12 @@ for datei = 1:numel(lautliste)   % loop over wave files
 	f=[0:df:(l-1)/2*df];
 	figure;
 	plot(f,mag_spec);
-	fig_title = strcat('Formanten f\"ur den Vokal " ', char(lautliste(datei)), '"');
+	fig_title = strcat('Formanten f\"ur den Vokal \enquote{', char(lautliste(datei)), '}');
 	title(fig_title);
 	xlabel('Frequenz in Hz')
 	ylabel('Amplitudenspektrum')
-	%matlab2tikz(strcat(char(lautliste(datei)),'_amplitude.tex'), 'height', '.5\textwidth');
-	[peak, loc] = findpeaks(mag_spec, "DoubleSided")
+	%matlab2tikz(strcat(char(lautliste(datei)),'-amplitude.tex'), 'height', '.5\textwidth');
+	%[peak, loc] = findpeaks(mag_spec, 'DoubleSided')
 
 	%input('weiter')
 
