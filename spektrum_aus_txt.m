@@ -17,9 +17,14 @@ for i=1:numel(buchstaben)
   f = f.';
   mag=M(:,2);
   mag = mag.';
+  p_mag = mag/max(abs(mag));
   figure;
-  plot(f,mag);
-  xlabel('Frequenz f/Hz');
-  ylabel(strcat('|',toupper(buchstaben(i)),'(f)| in dB'));
-  matlab2tikz(strcat('spektrum-',buchstabe(i),'-3.tex'),'height','.5\textwidth');
+  plot(f,p_mag);
+	fig_title = strcat('Formanten f\"ur den Vokal \enquote{', char(buchstaben(i)), '}');
+	title(fig_title);
+	xlim([0 15]*10^3);
+	%ylim([-1 0.01]);
+	xlabel('Frequenz in Hz')
+	ylabel('Amplitudenspektrum')
+  %matlab2tikz(strcat('spektrum-',buchstabe(i),'-3.tex'),'height','.5\textwidth');
 end
