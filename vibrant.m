@@ -43,7 +43,7 @@ for i=1:numel(buchstaben)
     N = length(y);
 		N1 = floor(.2*N);
 		wind_1 = zeros(1,N1);
-		wind_2 = 3*sin(10*pi*1*t0(N1+1:N))+*t0(N1+1:N);
+		wind_2 = 3*sin(2*pi*10*t0(N1+1:N))+*t0(N1+1:N);
 		wind = [wind_1 wind_2];
     y=y.*wind;
     
