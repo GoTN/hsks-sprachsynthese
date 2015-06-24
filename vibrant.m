@@ -27,20 +27,26 @@ for i=1:numel(buchstaben)
 	
 	switch char(buchstabe)
 		case 'r'
-			f1=300;
-			f2=1113;
-			f3=2408;	
-			B1=300;
-			B2=190;
-			B3=550;
+			f1=310;
+			f2=1060;
+			f3=1380;	
+			B1=70;
+			B2=100;
+			B3=120;
 	end
 	if(syn == 1)
 		y=formantfilter(x,Ts,f1,B1);	%1. Formantfilter
-		%y=formantfilter(y,Ts,f2,B2);	%2. Formantfilter
-		%y=formantfilter(y,Ts,f4,B4);	%4. Formantfilter
-		[b,a] = butter(5,3000/(0.5*fs),'low');
+		y=formantfilter(y,Ts,f2,B2);	%2. Formantfilter
+		y=formantfilter(y,Ts,f3,B3);	%4. Formantfilter
+		[b,a] = butter(5,700/(0.5*fs),'low');
 		y=filter(b,a,y);
-
+    N = length(y);
+		N1 = floor(.2*N);
+		wind_1 = zeros(1,N1);
+		wind_2 = 3*sin(10*pi*1*t0(N1+1:N))+*t0(N1+1:N);
+		wind = [wind_1 wind_2];
+    y=y.*wind;
+    
 	else 
 		y=x;
 	end
