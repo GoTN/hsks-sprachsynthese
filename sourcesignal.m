@@ -34,13 +34,15 @@ if (nargin<=2) fs=44100; end %sampling freq in Hz
 			x0_5 = sin(1.1*pi*f0*(t0(N4+1:N)-t0(N4)));
 			x0 = [x0_1 x0_2 x0_3 x0_4 x0_5];
 		%}
-		case 'vibrant'
-			N = length(t0);
-			N1 = floor(.2*N);
-			x0_1 = zeros(1,N1);
-			x0_2 = sin(2*pi*100*t0(1:.8*N-1))+t0(1:.8*N-1);
-			x0 = [x0_1 x0_2];
-		%{
+  
+%		case 'vibrant'
+%			N = length(t0);
+%			N1 = floor(.2*N);
+%			x0_1 = zeros(1,N1);
+%			x0_2 = sin(2*pi*10*t0(1:.8*N-1))+t0(1:.8*N-1);
+%			x0 = [x0_1 x0_2];
+	
+    %{
 		case 'linquidl'
 			N=length(t0);
 			N1=floor(.5*N);
