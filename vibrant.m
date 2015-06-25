@@ -50,5 +50,6 @@ for i=1:numel(buchstaben)
 	else 
 		y=x;
 	end
+	y=y/max(y);
 	wavwrite(y'/max(y),fs,strcat('vibrant-',char(buchstabe),'.wav'));
 end

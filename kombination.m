@@ -87,8 +87,9 @@ norm = 1;		%soll noch gefenster werden?
 			charnum_temp = charnum +2;
 			end
 		case 'vibrant'
-			sound=vibrant({word(charnum:charnum+max_size)},phonemelength,fs);							%Buchstabe, Zeitdauer (Samples*Samplingtime), Samplingfreq
-			charnum_temp = charnum +1;												%vibrant hat 1 Buchstaben			
+			sound=vibrant({word(charnum:charnum+max_size)},phonemelength,fs)*0.4;							%Buchstabe, Zeitdauer (Samples*Samplingtime), Samplingfreq
+			charnum_temp = charnum +1;												%vibrant hat 1 Buchstaben
+			norm=0;			
 		case 'zisch'
 			sound=zischlaut({word(charnum:charnum+max_size)},phonemelength,fs);		%Buchstabe, Zeitdauer (Samples*Samplingtime), Samplingfreq
 			charnum_temp = charnum +max_size+1;										%Zisch hat x Buchstaben
