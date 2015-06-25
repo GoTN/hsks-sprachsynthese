@@ -11,10 +11,10 @@ if (nargin<=1) DUR=2; end %duration in sec
 if (nargin<=2) fs=44100; end %sampling freq in Hz
 %if (nargin<=3) B=[100 160]; end %bandwidth
 if (nargin<=3) syn=1;	end %%soll synthetisieren?
-	
+
 Ts=1/fs;
-%B1=B(1);	%Filterbandbreite Formant 1	Acoustic Phonetics von Kenneth N. Stevens!
-%B2=B(2);	%Filterbandbreite Formant 2
+T_w = 0.04;
+f_w = 1/T_w;
 f0=150;	% Grundschwingung, Tonhoehe
 f1=f2=f3=0;%damit die in FKT definiert sind...
 B1=B2=B3=0;%damit die in FKT definiert sind...
@@ -43,7 +43,7 @@ for i=1:numel(buchstaben)
     N = length(y);
 		N1 = floor(.2*N);
 		wind_1 = zeros(1,N1);
-		wind_2 = 3*sin(2*pi*10*t(N1+1:N))+t(N1+1:N);
+		wind_2 = 3*sin(2*pi*f_w*t(N1+1:N))+t(N1+1:N);
 		wind = [wind_1 wind_2];
     y=y.*wind;
     
