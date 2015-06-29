@@ -17,7 +17,7 @@ B1=B(1);	%Filterbandbreite Formant 1	Acoustic Phonetics von Kenneth N. Stevens!
 B2=B(2);	%Filterbandbreite Formant 2
 f0=150;	% Grundschwingung, Tonhoehe
 
-x01=sourcesignal('fricationw',DUR,fs);
+x01=sourcesignal('zisch',DUR,fs);
 x02=sourcesignal('vokal',DUR,fs);
 disp(buchstaben);
 
