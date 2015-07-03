@@ -41,28 +41,33 @@ for i=1:numel(buchstaben)
 	
 	switch char(buchstabe)
 		case 'm'
-			f1 = 480;
-			f2 = 1270;
-			f3 = 2130;
+			f1 = 500;
+			f2 = 1506;
+			f3 = 2543;
 			B1 = 40;
-			B2 = 200;
-			B3 = 200;
+			B2 = 70;
+			B3 = 70;
 		case 'n'
-			f1 = 480;
-			f2 = 1340;
-			f3 = 2470;
+			f1 = 390;
+			f2 = 1608;
+			f3 = 2454;
 			B1 = 40;
-			B2 = 300;
-			B3 = 300;
+			B2 = 67;
+			B3 = 70;
 	end
 	
-	[b a] = butter(2,[440/(0.5*fs),460/(0.5*fs)],'stop');
+	[b a] = butter(1,[400/(0.5*fs),500/(0.5*fs)],'stop');
 	y = filter(b,a,x);		%Anti-Formantfilter "RNZ-FNZ"
 	
-	y = formantfilter(y,Ts,270,20);		%Zusaetzlicher Formantfilter "RNP-FNP"
+	y = formantfilter(y,Ts,250,20);		%Zusaetzlicher Formantfilter "RNP-FNP"
 	y=formantfilter(y,Ts,f1,B1);	%1. Formantfilter
 	y=formantfilter(y,Ts,f2,B2);	%2. Formantfilter
 	y=formantfilter(y,Ts,f3,B3);	%3. Formantfilter
+	
+	[b a] = butter(1,[500/(0.5*fs),1500/(0.5*fs)],'stop');
+	y = filter(b,a,y);
+	[b a] = butter(1,[1500/(0.5*fs),2500/(0.5*fs)],'stop');
+	y = filter(b,a,y);
 
 
 	wavwrite(y'/max(y),fs,strcat('nasal-',char(buchstabe),'.wav'));
