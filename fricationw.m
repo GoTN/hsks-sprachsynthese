@@ -45,7 +45,7 @@ y1 = filter(b,a,x01);
 w1 = formantfilter(x02,Ts,251,100);
 w1 = formantfilter(w1,Ts,1164,300);
 w1 = formantfilter(w1,Ts,2183,200);
-w = w1 + 2*y1;
+w = w1 + .001*y1;
 y=w;
 
 wavwrite(y'/max(y),fs,strcat('FRCw','.wav'));
