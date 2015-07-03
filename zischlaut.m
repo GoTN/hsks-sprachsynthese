@@ -3,70 +3,47 @@
 % 	Erzeugung von Zischlauten mittels einfacher Rauschquellenfilterung 	%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [y,t]=zischlaut(buchstaben,DUR,fs,B)
+function [y,t]=zischlaut(laute,DUR,fs)
 
 %%%%%			PARAMETER			%%%%%
-if (nargin==0) buchstaben={'s';'sch';'ch';'f'};end%Buchstaben
-if (nargin<=1) DUR=2; end %duration in sec
-if (nargin<=2) fs=44100; end %sampling freq in Hz
-if (nargin<=3) B=[1500 2000]; end %bandwidth
+if (nargin==0) laute={'s';'sch';'ch';'f'};end %Zu erzeugende Laute
+if (nargin<=1) DUR=2; end %Dauer in sec
+if (nargin<=2) fs=44100; end %Sampling Freq in Hz
 	
 	Ts=1/fs;
-	B1=B(1);	%Filterbandbreite Formant 1
-	B2=B(2);	%Filterbandbreite Formant 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	x=sourcesignal('zisch',DUR,fs);		%Erzeugen des Anregungssignals
+	disp(laute);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-	%f0=150;	% Grundschwingung, Tonhoehe
+
+%%%%%%%%%%%%%%%%%			FILTERUNG				%%%%%%%%%%%%%%%%%%%%%
+for i=1:numel(laute)	%Ueber alle Laute iterieren, die erzeugt werden sollen
+	laut=laute(i);		%Zu erzeugender Einzellaut
 	
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	%N=ceil(DUR*fs);
-	%t=0:Ts:(N-1)*Ts;
-	%x=randn(size(t));	%Rausch-Anregungssignal
-	x=sourcesignal('zisch',DUR,fs);
-	disp(buchstaben);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-for i=1:numel(buchstaben)
-	buchstabe=buchstaben(i);
-	
-	switch char(buchstabe)
-		case 's'		%Orientierung an Narayanan et al. 'Noise Source Models for Fricative Consonants'
-			%f1=6000;	%B1=500;
-			%f2=7800;	%B2=1000;
-			%B1=500;
-			%B2=1000;
-			b1=fir1(40,[6500 7500]/(fs/2),'DC-0');
-			w1=.5;
-			b2=fir1(50,[5500 6500]/(fs/2),'DC-0');
-			w2=.5;
-		case 'sch'		%Orientierung an Narayanan et al. 'Noise Source Models for Fricative Consonants'
-			%f1=2500;	%B1=300
-			%f2=5500;	%B2=500
-			%B1=300;
-			%B2=500;
+	switch char(laut)
+		case 's'		
+			b1=fir1(40,[6500 7500]/(fs/2),'DC-0');	%Filter 1
+			w1=.5;									%Wichtung 1
+			b2=fir1(50,[5500 6500]/(fs/2),'DC-0');	%Filter 2
+			w2=.5;									%Wichtung 2
+		case 'sch'		
 			b1=fir1(50,[2000 4750]/(fs/2),'DC-0');
 			w1=1;
 			b2=fir1(100,[4950 6400]/(fs/2),'DC-0');
 			w2=.5;
-		case 'ch'
-			%f1=320;
-			%f2=3200;
-			%b1=fir1(100,[2350 3200]/(fs/2),'DC-0');
+		case 'ch'		%'Ich'-Laut
 			b1=fir1(200,[2700 4750]/(fs/2),'DC-0');
 			w1=1;
 			b2=fir1(100,[4500 6400]/(fs/2),'DC-0');
 			w2=.8;
-		case 'f'		%Orientierung an Narayanan et al. 'Noise Source Models for Fricative Consonants'
-			%f1=1000;
-			%f2=8000;
-			%B1=250;
-			%B2=2000;
+		case 'f'
 			b1=fir1(50,[900 1100]/(fs/2),'DC-0');
 			w1=.5;
 			b2=fir1(10,[7000 9000]/(fs/2),'DC-0');
 			w2=.2;
 	end
-	y=w1*filter(b1,1,x)+w2*filter(b2,1,x);
-	%y=formantfilter(x,Ts,f1,B1)+formantfilter(x,Ts,f2,B2);	%Parallele Filterung, eventuell Wichtungsfaktoren
+	y=w1*filter(b1,1,x)+w2*filter(b2,1,x);	%Parallele Filterung des Quellsignals mit Wichtungen
 	
-	wavwrite(y'/max(y),fs,strcat('zischlaut-',char(buchstabe),'.wav'));
+	%wavwrite(y'/max(y),fs,strcat('zischlaut-',char(laut),'.wav'));	%Schreiben des Einzellauts in wav-Datei
 end
