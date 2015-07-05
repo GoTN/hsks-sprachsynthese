@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%						HAUPTSEMINAR SPRACHSYNTHESE						%
-% Erzeugung eines Vibranten mittels einfacher Formantfilterung %
+%		HAUPTSEMINAR SPRACHSYNTHESE				%
+% 	Erzeugung eines Vibranten mittels einfacher Formantfilterung 	%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [y , f , B]=vibrant(buchstaben,DUR,fs,syn)
@@ -12,9 +12,8 @@ if (nargin<=2) fs=44100; end %sampling freq in Hz
 %if (nargin<=3) B=[100 160]; end %bandwidth
 if (nargin<=3) syn=1;	end %%soll synthetisieren?
 
+Definition von Periodendauer, Grundfrequenz und Filterparameter
 Ts=1/fs;
-T_w = 0.04;
-f_w = 1/T_w;
 f0=150;	% Grundschwingung, Tonhoehe
 f1=f2=f3=0;%damit die in FKT definiert sind...
 B1=B2=B3=0;%damit die in FKT definiert sind...
@@ -37,14 +36,17 @@ for i=1:numel(buchstaben)
 			B3=120;
 	end
 	if(syn == 1)
+	%Formantfilterung
 		y=formantfilter(x,Ts,f1,B1);	%1. Formantfilter
 		y=formantfilter(y,Ts,f2,B2);	%2. Formantfilter
 		y=formantfilter(y,Ts,f3,B3);	%3. Formantfilter
     N = length(y);
+    	%Definition eines Fensters nach Lehrbriefen
 		N1 = floor(.2*N);
 		wind_1 = zeros(1,N1);
 		wind_2 = 3*sin(2*pi*f_w*t(N1+1:N))+t(N1+1:N);
 		wind = [wind_1 wind_2];
+	%Fensterung des Signals
     y=y.*wind;
     
 	else 
