@@ -3,29 +3,28 @@
 % 		Erzeugung eines Diphthong Lautes mittels Formantfilterung 		%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function y=diphthong(buchstaben,DUR,fs)
+function y=diphthong(lautliste,DUR,fs)
 
 %%%%%			PARAMETER			%%%%%
-if (nargin==0) buchstaben={'au';'ei';'eu';'ai'};end%Buchstaben
-if (nargin<=1) DUR=2; end %duration in sec
-if (nargin<=2) fs=44100; end %sampling freq in Hz
-	Ts=1/fs;
-	
-	%f0=150;	% Grundschwingung, Tonhoehe
+if (nargin==0) lautliste={'au';'ei';'eu';'ai'};end	%lautliste
+if (nargin<=1) DUR=2; end 							%duration in sec
+if (nargin<=2) fs=44100; end 						%sampling freq in Hz
+	Ts=1/fs;										%Abtastperiode
+
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	x=sourcesignal('diphthong',DUR,fs);
+	x=sourcesignal('diphthong',DUR,fs);				%Standart Vokalanregung
 
 	U = DUR*fs/3;	%%ein drittel der gesamtzeit wird uebergang
 	O = DUR*fs/3;	%%ein Drittel der Zeit wird offset	
 
-	disp(buchstaben);
+	disp(lautliste);
 	f1=f2=B1=B2=0;	%%variablen global definiert...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-for i=1:numel(buchstaben)
-	buchstabe=buchstaben(i);
-	switch char(buchstabe)
+for i=1:numel(lautliste)
+	buchstabe=lautliste(i);			%nimmm aktuellen laut
+	switch char(buchstabe)			%Werte für Anfangs- und Endvokale ermitteln
 		case 'au'		%%au
 			[y , f1 , B1]=stimmhaft({'a'},DUR,fs,0);
 			[y , f2 , B2]=stimmhaft({'u'},DUR,fs,0);
@@ -51,7 +50,7 @@ for i=1:numel(buchstaben)
 			[y , f1 , B1]=stimmhaft({'i'},DUR,fs,0);
 			[y , f2 , B2]=stimmhaft({'e'},DUR,fs,0);
 	end
-	f11=f1(1);
+	f11=f1(1);			%%in Variablen überführen
 	f21=f1(2);
 	f31=f1(3);
 	B11 = B1(1);
@@ -69,5 +68,5 @@ for i=1:numel(buchstaben)
 	y=formantfilter(y,Ts,f21,B21,f22, U, O,B22);	%2. Formantfilter
 	y=formantfilter(y,Ts,f31,B31,f32, U, O,B32);	%3. Formantfilter
 
-	wavwrite(y'/max(y),fs,strcat('stimmhaft-',char(buchstabe),'.wav'));
+	wavwrite(y'/max(y),fs,strcat('diphthong-',char(buchstabe),'.wav'));
 end
