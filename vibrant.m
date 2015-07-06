@@ -21,7 +21,6 @@ samples=ceil(DUR*fs);
 t=0:Ts:(samples-1)*Ts;
 x=sourcesignal('vibrant',DUR,fs);
 f_w = 10;
-disp(buchstaben);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i=1:numel(buchstaben)
