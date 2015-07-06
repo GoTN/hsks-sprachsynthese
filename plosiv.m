@@ -3,10 +3,10 @@
 % 				Erzeugung einer Plosiv/Vokal-Lautkombination 			%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function y=plosiv(buchstaben,DUR,fs,B)
+function y=plosiv(lautliste,DUR,fs,B)
 
 %%%%%			PARAMETER			%%%%%
-if (nargin==0) buchstaben={'de';'da';'do';'di'};end%Buchstaben
+if (nargin==0) lautliste={'de';'da';'do';'di'};end%lautliste
 if (nargin<=1) DUR=2; end %duration in sec
 if (nargin<=2) fs=44100; end %sampling freq in Hz
 if (nargin<=3) B=[100 160]; end %bandwidth	
@@ -19,10 +19,10 @@ if (nargin<=3) B=[100 160]; end %bandwidth
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Übergangszeiten festlegen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
-if(buchstaben(1)=='b')
+if(lautliste(1)=='b')
 	U = 0.005*fs;  	%%empirisch ermittelt
 	O = 0.01*fs;	%%ein Drittel der Zeit wird offset	
-elseif(buchstaben(1)=='g')
+elseif(lautliste(1)=='g')
 	U = 0.030*fs;  	%%empirisch ermittelt
 	O = 0.001*fs;	%%ein Drittel der Zeit wird offset	
 else
@@ -34,10 +34,9 @@ end
 % Anfangs- und Endwerte für Plosiv festlegen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 i=1;
-while i<=numel(buchstaben)
-	buchstabe=buchstaben(i);
-	if(length(buchstaben)-i>0)	%%nur wenn lang genug
-		doppellaut = buchstaben(i:i+1);	%%Doppellaut
+while i<=numel(lautliste)
+	if(length(lautliste)-i>0)	%%nur wenn lang genug
+		doppellaut = lautliste(i:i+1);	%%Doppellaut
 	else	
 		doppellaut = [0, 0];	%%dann kein Doppellaut	
 	end
@@ -135,5 +134,5 @@ while i<=numel(buchstaben)
 	y=formantfilter(x,Ts,f11,B1,f1, U, O);	%1. Formantfilter
 	y=formantfilter(y,Ts,f21,B2,f2, U, O);	%2. Formantfilter
 	y=formantfilter(y,Ts,f31,B3,f3, U, O);	%2. Formantfilter
-	%wavwrite(y'/max(y),fs,strcat('plosiv-',buchstaben,'.wav'));
+	%wavwrite(y'/max(y),fs,strcat('plosiv-',lautliste,'.wav'));
 end

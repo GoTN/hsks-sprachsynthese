@@ -3,10 +3,10 @@
 % 							Erzeugung eines Plosiv						%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function y=plosiv_stimmlos(buchstaben,DUR,fs)
+function y=plosiv_stimmlos(lautliste,DUR,fs)
 
 %%%%%			PARAMETER			%%%%%
-if (nargin==0) buchstaben={'de';'da';'do';'di'};end%Buchstaben
+if (nargin==0) lautliste={'de';'da';'do';'di'};end%Buchstaben
 if (nargin<=1) DUR=2; end %duration in sec
 if (nargin<=2) fs=44100; end %sampling freq in Hz
 		
@@ -17,10 +17,10 @@ if (nargin<=2) fs=44100; end %sampling freq in Hz
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 i=1;	%index zum Iterieren über Buchstabeneingabe
 fac=1;	%Amplitudenskalierungsfaktor
-while i<=numel(buchstaben)
-	buchstabe=buchstaben(i);
+while i<=numel(lautliste)
+	laut=lautliste(i);
 	i=i+1;
-	switch buchstabe	%Lautstärke und Periodenanzahl für passenden Plosiv wählen
+	switch laut	%Lautstärke und Periodenanzahl für passenden Plosiv wählen
 		case 't'			
 			peri_num = 0.5;
 			fac = 0.7;
@@ -34,9 +34,9 @@ while i<=numel(buchstaben)
 	% Fensterung des Spektrums im Zeitbereich
 	time = linspace(0, 2*pi, fs*bl);	
 	cosi = cos(time*peri_num)+2;	%aus Tschechnerbriefen nachempfundene Funktion
-	burs = burst(buchstabe,bl,fs);	%passenden Burst erzeugen
+	burs = burst(laut,bl,fs);	%passenden Burst erzeugen
 	burs = burs/(2*max(burs(1:bl*fs)));	%Normierung auf 0.5
 	burs = burs.*cosi;			%Fensterung
 	y=burs/(max(burs))*fac;
-	%wavwrite(y,fs,strcat('plosiv-stimmlos-',buchstaben,'.wav'));
+	%wavwrite(y,fs,strcat('plosiv-stimmlos-',lautliste,'.wav'));
 end
