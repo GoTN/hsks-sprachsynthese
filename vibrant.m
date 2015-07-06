@@ -20,6 +20,7 @@ B1=B2=B3=0;%damit die in FKT definiert sind...
 samples=ceil(DUR*fs);
 t=0:Ts:(samples-1)*Ts;
 x=sourcesignal('vibrant',DUR,fs);
+f_w = 10;
 disp(buchstaben);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
