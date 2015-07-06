@@ -3,10 +3,10 @@
 % 	Erzeugung eines Vibranten mittels einfacher Formantfilterung 	%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [y , f , B]=vibrant(buchstaben,DUR,fs,syn)
+function [y , f , B]=vibrant(laute,DUR,fs,syn)
 
 %%%%%			PARAMETER			%%%%%
-if (nargin==0) buchstaben={'r'}			;end%Buchstaben
+if (nargin==0) laute={'r'}			;end%Buchstaben
 if (nargin<=1) DUR=2; end %duration in sec
 if (nargin<=2) fs=44100; end %sampling freq in Hz
 %if (nargin<=3) B=[100 160]; end %bandwidth
@@ -31,8 +31,8 @@ x=sourcesignal('vibrant',DUR,fs);
 f_w = 7; %Frequenz für Fensterfunktion
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-for i=1:numel(buchstaben)
-	buchstabe=buchstaben(i);
+for i=1:numel(laute)
+	laut=laute(i);
 	
 	%Switch-Case-Struktur, zur einfachen Erweiterung des Programms
 	switch char(buchstabe)
