@@ -16,7 +16,6 @@ Ts=1/fs;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 x=sourcesignal('linquidl',DUR,fs);	%Erzeugung des Anregungssinals
-disp(buchstaben);
 
 %%%%%%%%%%%%%%%%%%%%%		Filterstruktur 	 	%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -28,4 +27,4 @@ wind=tukeywin(length(y),.01);
 y = y.*wind';
 y = .5*y;									%Hüllkurveverformung in Zeitbereich
 
-wavwrite(y'/max(y),fs,strcat('LQDl','.wav'));
+%wavwrite(y'/max(y),fs,strcat('LQDl','.wav'));
