@@ -17,7 +17,6 @@ Ts=1/fs;
 
 x01=sourcesignal('zisch',DUR,fs);		%Erzeugung des ersten Anregungssignal(Rauschen)
 x02=sourcesignal('vokal',DUR,fs);		%Erzeugung des zweiten Anregungssignal
-disp(buchstaben);
 
 %%%%%%%%%%%%%%%%%%%%%		Filterstruktur 	 %%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -31,4 +30,4 @@ w1 = formantfilter(w1,Ts,2183,200);		%3. Formantfilter
 w = w1 + .001*y1;						%Parallele Struktur von "w"
 y=w;
 
-wavwrite(y'/max(y),fs,strcat('FRCw','.wav'));
+%wavwrite(y'/max(y),fs,strcat('FRCw','.wav'));
