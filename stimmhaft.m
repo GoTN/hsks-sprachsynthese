@@ -16,9 +16,8 @@ f1=f2=f3=0;		%Initialisierung f1-f3
 B1=B2=B3=0;		%Initialisierung B1-B3
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 x=sourcesignal('vokal',DUR,fs);		%Erzeugen des Anregungssignals
-disp(laute);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%			FILTERUNG				%%%%%%%%%%%%%%%%%%%%%
 for i=1:numel(laute)	%Ueber alle Laute iterieren, die erzeugt werden sollen

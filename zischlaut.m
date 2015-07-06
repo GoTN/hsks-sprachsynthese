@@ -10,12 +10,11 @@ if (nargin==0) laute={'s';'sch';'ch';'f'};end %Zu erzeugende Laute
 if (nargin<=1) DUR=2; end %Dauer in sec
 if (nargin<=2) fs=44100; end %Sampling Freq in Hz
 	
-	Ts=1/fs;
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	x=sourcesignal('zisch',DUR,fs);		%Erzeugen des Anregungssignals
-	disp(laute);
+Ts=1/fs;
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+x=sourcesignal('zisch',DUR,fs);		%Erzeugen des Anregungssignals
 
 %%%%%%%%%%%%%%%%%			FILTERUNG				%%%%%%%%%%%%%%%%%%%%%
 for i=1:numel(laute)	%Ueber alle Laute iterieren, die erzeugt werden sollen
