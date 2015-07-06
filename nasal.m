@@ -15,7 +15,6 @@ Ts=1/fs;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 x=sourcesignal('nasal',DUR,fs);				%Erzeugung des Anregungssignals
-disp(buchstaben);
 
 %%%%%%%%%%%%%%%%%		Filterstruktur	 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -54,5 +53,5 @@ for i=1:numel(buchstaben)
 	y = filter(b,a,y);										%3. Anti-Formantfilter
 
 
-	wavwrite(y'/max(y),fs,strcat('nasal-',char(buchstabe),'.wav'));
+	%wavwrite(y'/max(y),fs,strcat('nasal-',char(buchstabe),'.wav'));
 end
