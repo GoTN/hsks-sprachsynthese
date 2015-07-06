@@ -20,6 +20,7 @@ if (nargin<=2) fs=44100; end 						%sampling freq in Hz
 
 	f1=f2=B1=B2=0;	%%variablen global definiert...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Werte für Anfangs und Endparameter bestimmen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i=1:numel(lautliste)
 	buchstabe=lautliste(i);			%nimmm aktuellen laut
@@ -49,7 +50,10 @@ for i=1:numel(lautliste)
 			[y , f1 , B1]=stimmhaft({'i'},DUR,fs,0);
 			[y , f2 , B2]=stimmhaft({'e'},DUR,fs,0);
 	end
-	f11=f1(1);			%%in Variablen überführen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Vektoren in Werte zerlegen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	f11=f1(1);			
 	f21=f1(2);
 	f31=f1(3);
 	B11 = B1(1);
@@ -63,6 +67,9 @@ for i=1:numel(lautliste)
 	B22 = B2(2);
 	B32 = B2(3);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Filterung des Quellsignals
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	y=formantfilter(x,Ts,f11,B11,f12, U, O,B12);	%1. Formantfilter
 	y=formantfilter(y,Ts,f21,B21,f22, U, O,B22);	%2. Formantfilter
 	y=formantfilter(y,Ts,f31,B31,f32, U, O,B32);	%3. Formantfilter

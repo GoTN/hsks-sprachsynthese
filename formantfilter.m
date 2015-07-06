@@ -1,6 +1,7 @@
-%# Bandpassfilterung mit Bandpass 2. Ordnung
-%# y=formantfilter(x,Ts,f0)
-%# y=formantfilter(x,Ts,f0,B)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%						HAUPTSEMINAR SPRACHSYNTHESE						%
+% 	Bandpassfilterung mit Bandpass 2. Ordnung für bis zu zwei Filter	%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function y=formantfilter(x,Ts,f0,B1,f2,U,O,B2)
 
 if (nargin==3) B1=150; end	%default bandwidth
@@ -10,11 +11,11 @@ if (nargin<=6) O=1; end		%default kein offset
 if (nargin<=7) B2=B1;end	%default bandwidth 2
 
 
-w0=2*pi*f0; %Mittenkreisfrequenz
-w2=2*pi*f2; 
-Q1=f0/B1;		%Guete Q=f0/B1
-Q2=f0/B2;		%Guete Q=f0/B1
-%Bandpass 2. Ordnung
+w0=2*pi*f0; %Mittenkreisfrequenz 1
+w2=2*pi*f2; %Mittenkreisfrequenz 2
+Q1=f0/B1;		%Guete Q=f0/B1 für Filter 1 
+Q2=f2/B2;		%Guete Q=f2/B1 für Filter 2
+%Bandpass 2. Ordnung für Filter vorher und nachher berechnet
 num=[w0/Q1 0];
 den=[1 w0/Q1 w0^2];
 num2=[w2/Q2 0];
@@ -28,12 +29,8 @@ BB=2*exp(-pi*B1*Ts)*cos(2*pi*f0*Ts);
 A=1-BB-C;
 
 
-if(nargin<=4)
+if(nargin<=4)	%%wenn nur erstere Filter genutzt wird
 	y=filter(numz1,denz1,x);
-	%y=filter(A,[1 -BB -C],x);
-else
+else	%%wenn beide genutz werden wird der übergang erzeugt
 	y=time_filter_simple(numz1,denz1,x,U,O,numz2,denz2);
 end
-% Alternativ
-%G=tf(numz,denz,Ts);
-%y=lsim(G,x);

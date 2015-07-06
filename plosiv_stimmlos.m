@@ -1,26 +1,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %						HAUPTSEMINAR SPRACHSYNTHESE						%
-% 				Erzeugung einer Plosiv/Vokal-Lautkombination 			%
+% 							Erzeugung eines Plosiv						%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function y=plosiv_stimmlos(buchstaben,DUR,fs,B)
+function y=plosiv_stimmlos(buchstaben,DUR,fs)
 
 %%%%%			PARAMETER			%%%%%
 if (nargin==0) buchstaben={'de';'da';'do';'di'};end%Buchstaben
 if (nargin<=1) DUR=2; end %duration in sec
 if (nargin<=2) fs=44100; end %sampling freq in Hz
-if (nargin<=3) B=[100 160]; end %bandwidth	
 		
 	bl=0.15;		%%Burst length
 	peri_num = 1;	%% anzahl Perioden 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Synthese des Bursts
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-i=1;
-fac=1;
+i=1;	%index zum Iterieren über Buchstabeneingabe
+fac=1;	%Amplitudenskalierungsfaktor
 while i<=numel(buchstaben)
 	buchstabe=buchstaben(i);
 	i=i+1;
-	switch buchstabe
+	switch buchstabe	%Lautstärke und Periodenanzahl für passenden Plosiv wählen
 		case 't'			
 			peri_num = 0.5;
 			fac = 0.7;
@@ -31,12 +31,12 @@ while i<=numel(buchstaben)
 			peri_num = 2;
 			fac = 0.5;
 	end
-	disp(fac);
-	time = linspace(0, 2*pi, fs*bl);
-	cosi = cos(time*peri_num)+2;
-	burs = burst(buchstabe,bl,fs);
-	burs = burs/(2*max(burs(1:bl*fs)));
-	burs = burs.*cosi;	
-	wavwrite(burs'/(max(burs))*fac,fs,strcat('plosiv-stimmlos-',buchstaben,'.wav'));
+	% Fensterung des Spektrums im Zeitbereich
+	time = linspace(0, 2*pi, fs*bl);	
+	cosi = cos(time*peri_num)+2;	%aus Tschechnerbriefen nachempfundene Funktion
+	burs = burst(buchstabe,bl,fs);	%passenden Burst erzeugen
+	burs = burs/(2*max(burs(1:bl*fs)));	%Normierung auf 0.5
+	burs = burs.*cosi;			%Fensterung
 	y=burs/(max(burs))*fac;
+	%wavwrite(y,fs,strcat('plosiv-stimmlos-',buchstaben,'.wav'));
 end

@@ -21,9 +21,10 @@ if (nargin<=3) B=[1500 2000]; end 	%bandwidth
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	x=sourcesignal('zisch',DUR,fs);			%%WGN von Zischquelle
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Filterwerte für Bursts setzen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	switch char(laut)
-		case 'd'		%siehe Tscheschner Lehrbrief
+		case 'd'		%siehe Tscheschner Lehrbrief, Werte von dort nachempfunden
 			f1=600;		
 			f2=4000;	
 			B1=200;
@@ -66,8 +67,15 @@ if (nargin<=3) B=[1500 2000]; end 	%bandwidth
 			c1=15;		%Wichtung der Filter in dB
 			c2=0;
 	end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Filterparameter Berechnen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 	b1=fir1(n,[(f1-B1/2)*Ts*2,(f1+B1/2)*Ts*2], 'bandpass');
 	b2=fir1(n,[(f2-B2/2)*Ts*2,(f2+B2/2)*Ts*2], 'bandpass');
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Filterung vornehmen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	y= 10^(c1/20)*filter(b1, 1, x)+10^(c2/20)*filter(b2, 1, x);
 	%wavwrite(y'/max(y),fs,strcat('burst-',char(laut),'.wav'));
