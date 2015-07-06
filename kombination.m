@@ -120,7 +120,7 @@ norm = 1;		%soll noch normiert werden?	norm = 1 --> ja sonst nicht normiert
 			charnum_temp = charnum +1;
 	end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-phonemesamples_end=numel(sound);	
+phonemesamples_end=numel(sound);	%nach wieviel sampels endet Laut
 
 	
 %%%%%	FENSTERUNG	%%%%%
