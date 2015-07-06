@@ -28,7 +28,7 @@ word = scanf('%s','C');	%Wort einlesen, was ausgegeben werden soll
 outputname = strcat(word , '.wav');	%Dateiname generieren
 disp ('Das eingegebene Wort lautet:'), disp (word);
 wordlength = length(word);	
-disp ('und hat die laenge:'),disp (wordlength);
+disp ('und hat die Laenge:'),disp (wordlength);
 
 
 
