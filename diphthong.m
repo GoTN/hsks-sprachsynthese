@@ -18,7 +18,6 @@ if (nargin<=2) fs=44100; end 						%sampling freq in Hz
 	U = DUR*fs/3;	%%ein drittel der gesamtzeit wird uebergang
 	O = DUR*fs/3;	%%ein Drittel der Zeit wird offset	
 
-	disp(lautliste);
 	f1=f2=B1=B2=0;	%%variablen global definiert...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -68,5 +67,5 @@ for i=1:numel(lautliste)
 	y=formantfilter(y,Ts,f21,B21,f22, U, O,B22);	%2. Formantfilter
 	y=formantfilter(y,Ts,f31,B31,f32, U, O,B32);	%3. Formantfilter
 
-	wavwrite(y'/max(y),fs,strcat('diphthong-',char(buchstabe),'.wav'));
+	%wavwrite(y'/max(y),fs,strcat('diphthong-',char(buchstabe),'.wav'));
 end

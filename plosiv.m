@@ -29,7 +29,7 @@ else
 	O = 0.005*fs;	%%ein Drittel der Zeit wird offset	
 end
 
-	disp(buchstaben);
+%	disp(buchstaben);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 i=1;
@@ -42,7 +42,6 @@ while i<=numel(buchstaben)
 		doppellaut = [0, 0];	%%dann kein Doppellaut	
 	end
 	i=i+2;					%%erstmal um zwei erhöhen, wir gehen von einem Diphthong aus.
-	disp(doppellaut);
 	f=B=0;
 	switch char(doppellaut(2))
 		case 'a'
@@ -136,5 +135,5 @@ while i<=numel(buchstaben)
 	y=formantfilter(x,Ts,f11,B1,f1, U, O);	%1. Formantfilter
 	y=formantfilter(y,Ts,f21,B2,f2, U, O);	%2. Formantfilter
 	y=formantfilter(y,Ts,f31,B3,f3, U, O);	%2. Formantfilter
-	wavwrite(y'/max(y),fs,strcat('plosiv-',buchstaben,'.wav'));
+	%wavwrite(y'/max(y),fs,strcat('plosiv-',buchstaben,'.wav'));
 end

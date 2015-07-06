@@ -20,7 +20,6 @@ if (nargin<=3) B=[1500 2000]; end 	%bandwidth
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	x=sourcesignal('zisch',DUR,fs);			%%WGN von Zischquelle
-	disp(laut);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	switch char(laut)
@@ -71,4 +70,4 @@ if (nargin<=3) B=[1500 2000]; end 	%bandwidth
 	b2=fir1(n,[(f2-B2/2)*Ts*2,(f2+B2/2)*Ts*2], 'bandpass');
 
 	y= 10^(c1/20)*filter(b1, 1, x)+10^(c2/20)*filter(b2, 1, x);
-	wavwrite(y'/max(y),fs,strcat('burst-',char(laut),'.wav'));
+	%wavwrite(y'/max(y),fs,strcat('burst-',char(laut),'.wav'));
