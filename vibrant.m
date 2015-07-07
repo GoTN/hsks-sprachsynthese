@@ -3,7 +3,7 @@
 %      Erzeugung eines Vibranten mittels einfacher Formantfilterung     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [y , f , B]=vibrant(buchstaben,DUR,fs,syn)
+function [y , f , B]=vibrant(laute,DUR,fs,syn)
 
 %%%%%			PARAMETER			%%%%%
 if (nargin==0) laute={'r'}; end %zu erzeugende Laute
