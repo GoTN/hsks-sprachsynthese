@@ -18,7 +18,7 @@ N = length(a) -1;	%Länge des zweiten Parameter Vektors von Filter 1
 %			Filterung mit veränderlichen Parametern						%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for counter = 1:1:length(x)
-	%Änderung der Filterparameter nach ta schritten
+	%Änderung der Filterparameter nach ta schritten und nur im Übergangsbereich
 	condition = (counter<=O+U) && (counter >= O) && (mod(counter,ta) == 0);
 	if condition	
 		a=(a1*(U+O-counter)+a2*(counter-O))/U;

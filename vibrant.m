@@ -6,7 +6,7 @@
 function [y , f , B]=vibrant(buchstaben,DUR,fs,syn)
 
 %%%%%			PARAMETER			%%%%%
-if (nargin==0) laute={'r'}			;end %zu erzeugende Laute
+if (nargin==0) laute={'r'}; end %zu erzeugende Laute
 if (nargin<=1) DUR=2; end % duration in sec
 if (nargin<=2) fs=44100; end % sampling freq in Hz
 if (nargin<=3) syn=1;	end %%bool, ob synthetisiert werden soll
