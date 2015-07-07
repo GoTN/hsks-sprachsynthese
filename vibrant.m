@@ -1,34 +1,34 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%						HAUPTSEMINAR SPRACHSYNTHESE						%
-% Erzeugung eines Vibranten mittels einfacher Formantfilterung %
+%						            HAUPTSEMINAR SPRACHSYNTHESE			          			%
+%      Erzeugung eines Vibranten mittels einfacher Formantfilterung     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [y , f , B]=vibrant(buchstaben,DUR,fs,syn)
 
 %%%%%			PARAMETER			%%%%%
-if (nargin==0) buchstaben={'r'}			;end%Buchstaben
-if (nargin<=1) DUR=2; end %duration in sec
-if (nargin<=2) fs=44100; end %sampling freq in Hz
-%if (nargin<=3) B=[100 160]; end %bandwidth
-if (nargin<=3) syn=1;	end %%soll synthetisieren?
+if (nargin==0) laute={'r'}			;end %zu erzeugende Laute
+if (nargin<=1) DUR=2; end % duration in sec
+if (nargin<=2) fs=44100; end % sampling freq in Hz
+if (nargin<=3) syn=1;	end %%bool, ob synthetisiert werden soll
 
 Ts=1/fs;
+f1=f2=f3=0;%Initialisierung f1-f3
+B1=B2=B3=0;%Initialisierung B1-B3
+samples=ceil(DUR*fs);
+%Fensterparameter
 T_w = 0.04;
 f_w = 1/T_w;
-f0=150;	% Grundschwingung, Tonhoehe
-f1=f2=f3=0;%damit die in FKT definiert sind...
-B1=B2=B3=0;%damit die in FKT definiert sind...
-samples=ceil(DUR*fs);
 t=0:Ts:(samples-1)*Ts;
 x=sourcesignal('vibrant',DUR,fs);
-disp(buchstaben);
+disp(laute);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-for i=1:numel(buchstaben)
-	buchstabe=buchstaben(i);
+for i=1:numel(laute)
+	laut=laute(i);
 	
-	switch char(buchstabe)
+	switch char(laut)
 		case 'r'
+    % Aus Klatt-Paper entnommene Werte
 			f1=310;
 			f2=1060;
 			f3=1380;	
@@ -40,6 +40,7 @@ for i=1:numel(buchstaben)
 		y=formantfilter(x,Ts,f1,B1);	%1. Formantfilter
 		y=formantfilter(y,Ts,f2,B2);	%2. Formantfilter
 		y=formantfilter(y,Ts,f3,B3);	%3. Formantfilter
+    % Fensterung nach Lehrbriefen
     N = length(y);
 		N1 = floor(.2*N);
 		wind_1 = zeros(1,N1);
@@ -51,5 +52,5 @@ for i=1:numel(buchstaben)
 		y=x;
 	end
 	y=y/max(y);
-	wavwrite(y'/max(y),fs,strcat('vibrant-',char(buchstabe),'.wav'));
+	%wavwrite(y'/max(y),fs,strcat('vibrant-',char(buchstabe),'.wav'));
 end
