@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%						            HAUPTSEMINAR SPRACHSYNTHESE			          			%
+%					HAUPTSEMINAR SPRACHSYNTHESE							%
 %      Erzeugung eines Vibranten mittels einfacher Formantfilterung     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -15,12 +15,15 @@ Ts=1/fs;
 f1=f2=f3=0;%Initialisierung f1-f3
 B1=B2=B3=0;%Initialisierung B1-B3
 samples=ceil(DUR*fs);
+
 %Fensterparameter
 T_w = 0.04;
 f_w = 1/T_w;
 t=0:Ts:(samples-1)*Ts;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 x=sourcesignal('vibrant',DUR,fs);
-disp(laute);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i=1:numel(laute)
