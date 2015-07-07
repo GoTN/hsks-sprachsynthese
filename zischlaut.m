@@ -3,7 +3,7 @@
 % 	Erzeugung von Zischlauten mittels einfacher Rauschquellenfilterung 	%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [y,t]=zischlaut(laute,DUR,fs)
+function y=zischlaut(laute,DUR,fs)
 
 %%%%%			PARAMETER			%%%%%
 if (nargin==0) laute={'s';'sch';'ch';'f'};end %Zu erzeugende Laute
