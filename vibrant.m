@@ -54,6 +54,6 @@ for i=1:numel(laute)
 	else 
 		y=x;
 	end
-	y=y/max(y);
-	%wavwrite(y'/max(y),fs,strcat('vibrant-',char(buchstabe),'.wav'));
-end
+	%y=y/max(y);
+	%wavwrite(y'/max(y),fs,strcat('vibrant-',char(laut),'.wav'));
+%end
